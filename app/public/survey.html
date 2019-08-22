@@ -188,11 +188,125 @@
                     <option value="5">5 (Strongly Agree)</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary mb-2 btn-block"><i class="far fa-check-circle"></i>Submit</button>
+            <button type="submit" class="btn btn-primary mb-2 btn-block" id="submitBtn"><i
+                    class="far fa-check-circle"></i>Submit</button>
         </form>
 
+        <hr>
+
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    <a href="/api/friends">API Friends List</a> |
+                    <a href="https://github.com/AijahChappell/FriendFinder">GitHub Repo</a>
+                </p>
+            </div>
+        </footer>
+
+        <div id="resultsModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title"><strong>Best Match</strong></h2>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="matchName"></h2>
+                        <img id="matchImg"
+                            src="#photo" alt="">
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>   
+                          </div>
+                </div>
+            </div>
+        </div>
 
     </div>
+
+    <script type="text/javascript">
+
+    // Get the modal
+let modal = document.getElementById("resultsModal");
+
+
+        $(document).ready(function() {
+            $("#submitBtn").on("click", function(e) {
+                e.preventDefault();
+
+                $("#resultsModal").modal("toggle");
+
+                function validateForm() {
+                    let isValid = true;       
+                    $(".validate").each(function() {
+                        if ($(this).val() === ""){
+                            isValid = false;      
+                        }
+        
+                    });
+        
+                    $(".browser-default").each(function() {    
+                        if ($(this).val() === ""){
+                            isValid = false;
+                        }
+        
+                    });
+        
+                    return isValid;
+        
+                }
+        
+                if (validateForm() == true) {
+                    let newFriend = {
+                        name: $("#name").val().trim(),   
+                        profilePic: $("#photo").val().trim(),      
+                        scores: [
+                            $("#questionOne").val(),       
+                            $("#questionTwo").val(),
+                            $("#questionThree").val(),
+                            $("#questionFour").val(),
+                            $("#questionFive").val(),
+                            $("#questionSix").val(),
+                            $("#questionSeven").val(),
+                            $("#questionEight").val(),
+                            $("#questionNine").val(),
+                            $("#questionTen").val(),
+                        ]
+        
+                    };
+        
+           //const currentURL = window.location.origin;
+        
+                    $.post("/api/friends", newFriend, function(data) {
+                        $("#matchName").text(data.name);
+                        $("#matchPic").attr("src", data.profilePic);
+                    });
+        
+                        $(".modal").modal();
+                    $("#name").val("");
+        
+                    $("#photo").val("");
+        
+                    $("#questionOne").val("");   
+                    $("#questionTwo").val("");
+                    $("#questionThree").val("");
+                    $("#questionFour").val("");
+                    $("#questionFive").val("");
+                    $("#questionSix").val("");
+                    $("#questionSeven").val("");
+                    $("#questionEight").val("");
+                    $("#questionNine").val("");
+                    $("#questionTen").val("");
+        
+                } else {
+                    alert("Please fill out ALL fields before submitting survey!")
+                }
+
+            });
+        
+        });
+        
+        </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

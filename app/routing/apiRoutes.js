@@ -6,15 +6,14 @@ module.exports = function(app){
     });
 
     app.post("/api/friends", function(req, res) {
-        const newFriend = req.body;
+        const newFriendScore = req.body.scores;
         const scoreArr = [];
-        let count = 0;
         let match = 0;
 
         for(let i=0; i<userData.length; i++) {
             let difference = 0;
-            for(let j=0; j<newFriend.scores.length; j++) {
-                difference += (Math.abs(parseInt(userData[i].scores[j])))
+            for(let j=0; j<newFriendScore.length; j++) {
+                difference += (Math.abs(parseInt(userData[i].scores[j]) - parseInt(newFriendScore[j])));
             }
             scoreArr.push(difference);
         }
