@@ -9,8 +9,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/801ca59d70.js"></script>
 
 </head>
@@ -212,12 +212,11 @@
                     </div>
                     <div class="modal-body">
                         <h2 id="matchName"></h2>
-                        <img id="matchImg"
-                            src="#photo" alt="">
+                        <img id="matchImg" src="#photo" alt="">
                     </div>
                     <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>   
-                          </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -226,42 +225,42 @@
 
     <script type="text/javascript">
 
-    // Get the modal
-let modal = document.getElementById("resultsModal");
+        // Get the modal
+        let modal = document.getElementById("resultsModal");
 
 
-        $(document).ready(function() {
-            $("#submitBtn").on("click", function(e) {
+        $(document).ready(function () {
+            $("#submitBtn").on("click", function (e) {
                 e.preventDefault();
 
                 $("#resultsModal").modal("toggle");
 
                 function validateForm() {
-                    let isValid = true;       
-                    $(".validate").each(function() {
-                        if ($(this).val() === ""){
-                            isValid = false;      
-                        }
-        
-                    });
-        
-                    $(".browser-default").each(function() {    
-                        if ($(this).val() === ""){
+                    let isValid = true;
+                    $(".validate").each(function () {
+                        if ($(this).val() === "") {
                             isValid = false;
                         }
-        
+
                     });
-        
+
+                    $(".browser-default").each(function () {
+                        if ($(this).val() === "") {
+                            isValid = false;
+                        }
+
+                    });
+
                     return isValid;
-        
+
                 }
-        
+
                 if (validateForm() == true) {
                     let newFriend = {
-                        name: $("#name").val().trim(),   
-                        profilePic: $("#photo").val().trim(),      
+                        name: $("#name").val().trim(),
+                        profilePic: $("#photo").val().trim(),
                         scores: [
-                            $("#questionOne").val(),       
+                            $("#questionOne").val(),
                             $("#questionTwo").val(),
                             $("#questionThree").val(),
                             $("#questionFour").val(),
@@ -272,22 +271,22 @@ let modal = document.getElementById("resultsModal");
                             $("#questionNine").val(),
                             $("#questionTen").val(),
                         ]
-        
+
                     };
-        
-           //const currentURL = window.location.origin;
-        
-                    $.post("/api/friends", newFriend, function(data) {
+
+                    //const currentURL = window.location.origin;
+
+                    $.post("/api/friends", newFriend, function (data) {
                         $("#matchName").text(data.name);
                         $("#matchPic").attr("src", data.profilePic);
                     });
-        
-                        $(".modal").modal();
+
+                    $(".modal").modal();
                     $("#name").val("");
-        
+
                     $("#photo").val("");
-        
-                    $("#questionOne").val("");   
+
+                    $("#questionOne").val("");
                     $("#questionTwo").val("");
                     $("#questionThree").val("");
                     $("#questionFour").val("");
@@ -297,20 +296,19 @@ let modal = document.getElementById("resultsModal");
                     $("#questionEight").val("");
                     $("#questionNine").val("");
                     $("#questionTen").val("");
-        
+
                 } else {
                     alert("Please fill out ALL fields before submitting survey!")
                 }
 
             });
-        
-        });
-        
-        </script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        });
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
